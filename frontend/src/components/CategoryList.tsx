@@ -1,5 +1,5 @@
 import React from 'react';
-import { getCategoryColor } from '../utils/categoryIcons';
+import { getCategoryIcon, getCategoryColor } from '../utils/categoryIcons';
 import type { Category } from '../types';
 
 interface CategoryListProps {
@@ -52,7 +52,7 @@ const CategoryList: React.FC<CategoryListProps> = ({ categories, onEdit, onDelet
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
       {categories.map((category) => {
-        const categoryIcon = category.icon || '🏷️';
+        const categoryIcon = getCategoryIcon(category.name);
         const categoryColor = getCategoryColor(category.name);
         
         return (
