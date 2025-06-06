@@ -25,9 +25,6 @@ A React-based frontend for an Expense Tracker application built with Vite and Ty
 
 ## Setup Instructions
 1. Clone the repository
-2. ```bash
-npm install
-```
-3. ```bash
-npm run dev
-```
+2. npm install
+3. npm run dev
+
