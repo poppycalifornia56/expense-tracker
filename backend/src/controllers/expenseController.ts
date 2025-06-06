@@ -4,7 +4,7 @@ import { CreateExpenseRequest, UpdateExpenseRequest } from '../types';
 
 const prisma = new PrismaClient();
 
-export const getAllExpenses = async (req: Request, res: Response) => {
+export const getAllExpenses = async (req: Request, res: Response): Promise<void> => {
   try {
     const expenses = await prisma.expense.findMany({
       orderBy: { date: 'desc' },
@@ -18,7 +18,7 @@ export const getAllExpenses = async (req: Request, res: Response) => {
   }
 };
 
-export const getExpenseById = async (req: Request, res: Response) => {
+export const getExpenseById = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
     const expense = await prisma.expense.findUnique({
@@ -29,7 +29,8 @@ export const getExpenseById = async (req: Request, res: Response) => {
     });
     
     if (!expense) {
-      return res.status(404).json({ error: 'Expense not found' });
+      res.status(404).json({ error: 'Expense not found' });
+      return;
     }
     
     res.json(expense);
@@ -38,12 +39,13 @@ export const getExpenseById = async (req: Request, res: Response) => {
   }
 };
 
-export const createExpense = async (req: Request, res: Response) => {
+export const createExpense = async (req: Request, res: Response): Promise<void> => {
   try {
     const { title, amount, description, categoryId, date }: CreateExpenseRequest = req.body;
     
     if (!title || !amount || !categoryId) {
-      return res.status(400).json({ error: 'Title, amount, and categoryId are required' });
+      res.status(400).json({ error: 'Title, amount, and categoryId are required' });
+      return;
     }
     
     const categoryExists = await prisma.category.findUnique({
@@ -51,7 +53,8 @@ export const createExpense = async (req: Request, res: Response) => {
     });
     
     if (!categoryExists) {
-      return res.status(400).json({ error: 'Category does not exist' });
+      res.status(400).json({ error: 'Category does not exist' });
+      return;
     }
     
     const expense = await prisma.expense.create({
@@ -73,7 +76,7 @@ export const createExpense = async (req: Request, res: Response) => {
   }
 };
 
-export const updateExpense = async (req: Request, res: Response) => {
+export const updateExpense = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
     const { title, amount, description, categoryId, date }: UpdateExpenseRequest = req.body;
@@ -84,7 +87,8 @@ export const updateExpense = async (req: Request, res: Response) => {
       });
       
       if (!categoryExists) {
-        return res.status(400).json({ error: 'Category does not exist' });
+        res.status(400).json({ error: 'Category does not exist' });
+        return;
       }
     }
     
@@ -105,13 +109,14 @@ export const updateExpense = async (req: Request, res: Response) => {
     res.json(expense);
   } catch (error: any) {
     if (error.code === 'P2025') {
-      return res.status(404).json({ error: 'Expense not found' });
+      res.status(404).json({ error: 'Expense not found' });
+      return;
     }
     res.status(500).json({ error: 'Failed to update expense' });
   }
 };
 
-export const deleteExpense = async (req: Request, res: Response) => {
+export const deleteExpense = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
     
@@ -122,7 +127,8 @@ export const deleteExpense = async (req: Request, res: Response) => {
     res.status(204).send();
   } catch (error: any) {
     if (error.code === 'P2025') {
-      return res.status(404).json({ error: 'Expense not found' });
+      res.status(404).json({ error: 'Expense not found' });
+      return;
     }
     res.status(500).json({ error: 'Failed to delete expense' });
   }

@@ -1,4 +1,3 @@
-// src/App.tsx
 import React, { useState, useEffect } from 'react';
 import type { Category, Expense } from './types';
 import { categoryAPI, expenseAPI } from './services/api';
@@ -141,6 +140,14 @@ const App: React.FC = () => {
       {activeTab === 'expenses' ? (
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
           <div>
+            <h2>Expenses</h2>
+            <ExpenseList
+              expenses={expenses}
+              onEdit={setEditingExpense}
+              onDelete={handleExpenseDelete}
+            />
+          </div>
+          <div>
             <h2>{editingExpense ? 'Edit Expense' : 'Add New Expense'}</h2>
             <ExpenseForm
               expense={editingExpense}
@@ -175,4 +182,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-           

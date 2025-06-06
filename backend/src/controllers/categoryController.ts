@@ -4,7 +4,7 @@ import { CreateCategoryRequest, UpdateCategoryRequest } from '../types';
 
 const prisma = new PrismaClient();
 
-export const getAllCategories = async (req: Request, res: Response) => {
+export const getAllCategories = async (req: Request, res: Response): Promise<void> => {
   try {
     const categories = await prisma.category.findMany({
       orderBy: { createdAt: 'desc' },
@@ -20,7 +20,7 @@ export const getAllCategories = async (req: Request, res: Response) => {
   }
 };
 
-export const getCategoryById = async (req: Request, res: Response) => {
+export const getCategoryById = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
     const category = await prisma.category.findUnique({
@@ -33,7 +33,8 @@ export const getCategoryById = async (req: Request, res: Response) => {
     });
     
     if (!category) {
-      return res.status(404).json({ error: 'Category not found' });
+      res.status(404).json({ error: 'Category not found' });
+      return;
     }
     
     res.json(category);
@@ -42,12 +43,13 @@ export const getCategoryById = async (req: Request, res: Response) => {
   }
 };
 
-export const createCategory = async (req: Request, res: Response) => {
+export const createCategory = async (req: Request, res: Response): Promise<void> => {
   try {
     const { name, description }: CreateCategoryRequest = req.body;
     
     if (!name) {
-      return res.status(400).json({ error: 'Name is required' });
+      res.status(400).json({ error: 'Name is required' });
+      return;
     }
     
     const category = await prisma.category.create({
@@ -60,13 +62,14 @@ export const createCategory = async (req: Request, res: Response) => {
     res.status(201).json(category);
   } catch (error: any) {
     if (error.code === 'P2002') {
-      return res.status(400).json({ error: 'Category name already exists' });
+      res.status(400).json({ error: 'Category name already exists' });
+      return;
     }
     res.status(500).json({ error: 'Failed to create category' });
   }
 };
 
-export const updateCategory = async (req: Request, res: Response) => {
+export const updateCategory = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
     const { name, description }: UpdateCategoryRequest = req.body;
@@ -82,16 +85,18 @@ export const updateCategory = async (req: Request, res: Response) => {
     res.json(category);
   } catch (error: any) {
     if (error.code === 'P2025') {
-      return res.status(404).json({ error: 'Category not found' });
+      res.status(404).json({ error: 'Category not found' });
+      return;
     }
     if (error.code === 'P2002') {
-      return res.status(400).json({ error: 'Category name already exists' });
+      res.status(400).json({ error: 'Category name already exists' });
+      return;
     }
     res.status(500).json({ error: 'Failed to update category' });
   }
 };
 
-export const deleteCategory = async (req: Request, res: Response) => {
+export const deleteCategory = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
     
@@ -102,7 +107,8 @@ export const deleteCategory = async (req: Request, res: Response) => {
     res.status(204).send();
   } catch (error: any) {
     if (error.code === 'P2025') {
-      return res.status(404).json({ error: 'Category not found' });
+      res.status(404).json({ error: 'Category not found' });
+      return;
     }
     res.status(500).json({ error: 'Failed to delete category' });
   }
