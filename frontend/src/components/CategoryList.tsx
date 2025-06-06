@@ -1,4 +1,5 @@
 import React from 'react';
+import { getCategoryColor } from '../utils/categoryIcons';
 import type { Category } from '../types';
 
 interface CategoryListProps {
@@ -8,18 +9,6 @@ interface CategoryListProps {
 }
 
 const CategoryList: React.FC<CategoryListProps> = ({ categories, onEdit, onDelete }) => {
-  const getCategoryColor = (categoryName: string) => {
-    const colors = [
-      '#1565c0', '#00c853', '#ff6b6b', '#f59e0b', 
-      '#8b5cf6', '#06b6d4', '#f97316', '#84cc16'
-    ];
-    const hash = categoryName.split('').reduce((a, b) => {
-      a = ((a << 5) - a) + b.charCodeAt(0);
-      return a & a;
-    }, 0);
-    return colors[Math.abs(hash) % colors.length];
-  };
-
   if (categories.length === 0) {
     return (
       <div style={{ 
@@ -62,166 +51,171 @@ const CategoryList: React.FC<CategoryListProps> = ({ categories, onEdit, onDelet
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-      {categories.map((category) => (
-        <div
-          key={category.id}
-          style={{
-            backgroundColor: 'white',
-            borderRadius: '12px',
-            padding: '20px',
-            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.04)',
-            border: '1px solid #e8ecf4',
-            transition: 'all 0.2s ease',
-            cursor: 'pointer'
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'translateY(-1px)';
-            e.currentTarget.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.08)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'translateY(0)';
-            e.currentTarget.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.04)';
-          }}
-        >
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '16px' }}>
-            <div style={{ flex: 1, minWidth: '0' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
-                <div style={{
-                  width: '24px',
-                  height: '24px',
-                  backgroundColor: getCategoryColor(category.name),
-                  borderRadius: '6px',
-                  display: 'flex',
+      {categories.map((category) => {
+        const categoryIcon = category.icon || '🏷️';
+        const categoryColor = getCategoryColor(category.name);
+        
+        return (
+          <div
+            key={category.id}
+            style={{
+              backgroundColor: 'white',
+              borderRadius: '12px',
+              padding: '20px',
+              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.04)',
+              border: '1px solid #e8ecf4',
+              transition: 'all 0.2s ease',
+              cursor: 'pointer'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-1px)';
+              e.currentTarget.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.08)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.04)';
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '16px' }}>
+              <div style={{ flex: 1, minWidth: '0' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
+                  <div style={{
+                    width: '24px',
+                    height: '24px',
+                    backgroundColor: categoryColor,
+                    borderRadius: '6px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '12px'
+                  }}>{categoryIcon}</div>
+                  <h3 style={{ 
+                    margin: '0', 
+                    color: '#1a202c',
+                    fontSize: '16px',
+                    fontWeight: '700',
+                    lineHeight: '1.2'
+                  }}>
+                    {category.name}
+                  </h3>
+                  <span style={{
+                    padding: '2px 8px',
+                    backgroundColor: categoryColor + '15',
+                    color: categoryColor,
+                    borderRadius: '12px',
+                    fontSize: '11px',
+                    fontWeight: '600',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px'
+                  }}>
+                    Category
+                  </span>
+                </div>
+                
+                {category.description && (
+                  <p style={{ 
+                    margin: '0 0 8px 0', 
+                    color: '#4a5568', 
+                    fontSize: '14px',
+                    lineHeight: '1.4'
+                  }}>
+                    {category.description}
+                  </p>
+                )}
+                
+                <div style={{ 
+                  display: 'flex', 
                   alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '12px'
-                }}>🏷️</div>
-                <h3 style={{ 
-                  margin: '0', 
-                  color: '#1a202c',
-                  fontSize: '16px',
-                  fontWeight: '700',
-                  lineHeight: '1.2'
+                  fontSize: '12px', 
+                  color: '#4a5568',
+                  fontWeight: '500'
                 }}>
-                  {category.name}
-                </h3>
-                <span style={{
-                  padding: '2px 8px',
-                  backgroundColor: getCategoryColor(category.name) + '15',
-                  color: getCategoryColor(category.name),
-                  borderRadius: '12px',
-                  fontSize: '11px',
-                  fontWeight: '600',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.5px'
-                }}>
-                  Category
-                </span>
+                  <span style={{ 
+                    padding: '2px 8px',
+                    backgroundColor: '#f7fafc',
+                    borderRadius: '12px',
+                    border: '1px solid #e8ecf4'
+                  }}>
+                    {category._count?.expenses !== undefined ? category._count.expenses : 0} expenses
+                  </span>
+                </div>
               </div>
-              
-              {category.description && (
-                <p style={{ 
-                  margin: '0 0 8px 0', 
-                  color: '#4a5568', 
-                  fontSize: '14px',
-                  lineHeight: '1.4'
-                }}>
-                  {category.description}
-                </p>
-              )}
               
               <div style={{ 
-                display: 'flex', 
-                alignItems: 'center',
-                fontSize: '12px', 
-                color: '#4a5568',
-                fontWeight: '500'
+                display: 'flex',
+                gap: '8px',
+                alignItems: 'center'
               }}>
-                <span style={{ 
-                  padding: '2px 8px',
-                  backgroundColor: '#f7fafc',
-                  borderRadius: '12px',
-                  border: '1px solid #e8ecf4'
-                }}>
-                  {category._count?.expenses !== undefined ? category._count.expenses : 0} expenses
-                </span>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onEdit(category);
+                  }}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    padding: '8px 12px',
+                    background: 'linear-gradient(135deg, #1565c0 0%, #1976d2 100%)',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '8px',
+                    cursor: 'pointer',
+                    fontSize: '12px',
+                    fontWeight: '600',
+                    transition: 'all 0.2s ease',
+                    boxShadow: '0 2px 4px rgba(21, 101, 192, 0.25)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-1px)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                  }}
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    const expenseCount = category._count?.expenses || 0;
+                    const message = expenseCount > 0 
+                      ? `This category has ${expenseCount} expenses. Deleting it will also delete all associated expenses. Are you sure?`
+                      : 'Are you sure you want to delete this category?';
+                      
+                    if (window.confirm(message)) {
+                      onDelete(category.id);
+                    }
+                  }}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    padding: '8px 12px',
+                    background: 'linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%)',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '8px',
+                    cursor: 'pointer',
+                    fontSize: '12px',
+                    fontWeight: '600',
+                    transition: 'all 0.2s ease',
+                    boxShadow: '0 2px 4px rgba(255, 107, 107, 0.25)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-1px)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                  }}
+                >
+                  Delete
+                </button>
               </div>
             </div>
-            
-            <div style={{ 
-              display: 'flex',
-              gap: '8px',
-              alignItems: 'center'
-            }}>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onEdit(category);
-                }}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '4px',
-                  padding: '8px 12px',
-                  background: 'linear-gradient(135deg, #1565c0 0%, #1976d2 100%)',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '8px',
-                  cursor: 'pointer',
-                  fontSize: '12px',
-                  fontWeight: '600',
-                  transition: 'all 0.2s ease',
-                  boxShadow: '0 2px 4px rgba(21, 101, 192, 0.25)'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-1px)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                }}
-              >
-                Edit
-              </button>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  const expenseCount = category._count?.expenses || 0;
-                  const message = expenseCount > 0 
-                    ? `This category has ${expenseCount} expenses. Deleting it will also delete all associated expenses. Are you sure?`
-                    : 'Are you sure you want to delete this category?';
-                    
-                  if (window.confirm(message)) {
-                    onDelete(category.id);
-                  }
-                }}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '4px',
-                  padding: '8px 12px',
-                  background: 'linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%)',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '8px',
-                  cursor: 'pointer',
-                  fontSize: '12px',
-                  fontWeight: '600',
-                  transition: 'all 0.2s ease',
-                  boxShadow: '0 2px 4px rgba(255, 107, 107, 0.25)'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-1px)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                }}
-              >
-                Delete
-              </button>
-            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 };

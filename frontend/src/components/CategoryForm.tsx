@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { getCategoryColor } from '../utils/categoryIcons';
 import type { Category } from '../types';
 
 interface CategoryFormProps {
@@ -7,36 +8,54 @@ interface CategoryFormProps {
   onCancel: () => void;
 }
 
+const AVAILABLE_ICONS = [
+  { icon: '🍔', label: 'Food & Dining' },
+  { icon: '🚗', label: 'Transport' },
+  { icon: '🎮', label: 'Entertainment' },
+  { icon: '🛍️', label: 'Shopping' },
+  { icon: '🏥', label: 'Health & Medical' },
+  { icon: '📄', label: 'Bills & Utilities' },
+  { icon: '📚', label: 'Education' },
+  { icon: '🏠', label: 'Home & Garden' },
+  { icon: '💼', label: 'Work & Business' },
+  { icon: '🎁', label: 'Gifts & Donations' },
+  { icon: '💄', label: 'Personal Care' },
+  { icon: '🐕', label: 'Pets' },
+  { icon: '💻', label: 'Technology' },
+  { icon: '☕', label: 'Coffee & Drinks' },
+  { icon: '🏦', label: 'Banking & Finance' },
+  { icon: '🏷️', label: 'General' },
+  { icon: '🎵', label: 'Music' },
+  { icon: '🏋️', label: 'Fitness' },
+  { icon: '🎨', label: 'Art & Creativity' },
+  { icon: '📱', label: 'Phone & Communication' },
+  { icon: '⚡', label: 'Energy & Utilities' },
+  { icon: '🧳', label: 'Travel' },
+  { icon: '👕', label: 'Clothing' },
+  { icon: '🎭', label: 'Events & Activities' }
+];
+
 const CategoryForm: React.FC<CategoryFormProps> = ({ category, onSubmit, onCancel }) => {
   const [formData, setFormData] = useState({
     name: '',
-    description: ''
+    description: '',
+    icon: '🏷️'
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
-
-  const getCategoryColor = (categoryName: string) => {
-    if (!categoryName) return '#00c853';
-    const colors = [
-      '#00c853', '#1565c0', '#ff6b6b', '#f59e0b', 
-      '#8b5cf6', '#06b6d4', '#f97316', '#84cc16'
-    ];
-    const hash = categoryName.split('').reduce((a, b) => {
-      a = ((a << 5) - a) + b.charCodeAt(0);
-      return a & a;
-    }, 0);
-    return colors[Math.abs(hash) % colors.length];
-  };
+  const [showIconPicker, setShowIconPicker] = useState(false);
 
   useEffect(() => {
     if (category) {
       setFormData({
         name: category.name,
-        description: category.description || ''
+        description: category.description || '',
+        icon: category.icon || '🏷️'
       });
     } else {
       setFormData({
         name: '',
-        description: ''
+        description: '',
+        icon: '🏷️'
       });
     }
   }, [category]);
@@ -63,7 +82,8 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ category, onSubmit, onCance
     
     const submitData = {
       name: formData.name.trim(),
-      description: formData.description.trim() || undefined
+      description: formData.description.trim() || undefined,
+      icon: formData.icon
     };
     
     onSubmit(submitData);
@@ -84,6 +104,14 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ category, onSubmit, onCance
     }
   };
 
+  const handleIconSelect = (icon: string) => {
+    setFormData(prev => ({
+      ...prev,
+      icon
+    }));
+    setShowIconPicker(false);
+  };
+
   const currentColor = getCategoryColor(formData.name);
 
   return (
@@ -92,7 +120,8 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ category, onSubmit, onCance
       borderRadius: '16px',
       padding: '24px',
       boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
-      border: '1px solid #e8ecf4'
+      border: '1px solid #e8ecf4',
+      position: 'relative'
     }}>
       <div style={{
         display: 'flex',
@@ -111,7 +140,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ category, onSubmit, onCance
           alignItems: 'center',
           justifyContent: 'center',
           fontSize: '16px'
-        }}>🏷️</div>
+        }}>{formData.icon}</div>
         <h2 style={{ 
           margin: '0',
           fontSize: '20px',
@@ -208,6 +237,137 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ category, onSubmit, onCance
               </span>
             </div>
           )}
+        </div>
+
+        <div style={{ marginBottom: '20px' }}>
+          <label style={{ 
+            display: 'block', 
+            marginBottom: '8px', 
+            color: '#4a5568',
+            fontSize: '14px',
+            fontWeight: '600'
+          }}>
+            Category Icon *
+          </label>
+          <div style={{ position: 'relative' }}>
+            <button
+              type="button"
+              onClick={() => setShowIconPicker(!showIconPicker)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                width: '100%',
+                padding: '12px 16px',
+                border: '2px solid #e8ecf4',
+                borderRadius: '12px',
+                backgroundColor: '#ffffff',
+                cursor: 'pointer',
+                fontSize: '15px',
+                fontFamily: 'system-ui, -apple-system, sans-serif',
+                transition: 'all 0.2s ease',
+                outline: 'none',
+                textAlign: 'left'
+              }}
+              onFocus={(e) => {
+                e.target.style.borderColor = currentColor;
+                e.target.style.boxShadow = `0 0 0 3px ${currentColor}20`;
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = '#e8ecf4';
+                e.target.style.boxShadow = 'none';
+              }}
+            >
+              <div style={{
+                width: '24px',
+                height: '24px',
+                backgroundColor: currentColor,
+                borderRadius: '6px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '14px'
+              }}>{formData.icon}</div>
+              <span style={{ color: '#1a202c', flex: 1 }}>
+                {AVAILABLE_ICONS.find(item => item.icon === formData.icon)?.label || 'Select an icon'}
+              </span>
+              <div style={{
+                width: '20px',
+                height: '20px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#a0aec0',
+                transform: showIconPicker ? 'rotate(180deg)' : 'rotate(0deg)',
+                transition: 'transform 0.2s ease'
+              }}>▼</div>
+            </button>
+
+            {showIconPicker && (
+              <div style={{
+                position: 'absolute',
+                top: '100%',
+                left: '0',
+                right: '0',
+                zIndex: 1000,
+                backgroundColor: 'white',
+                border: '2px solid #e8ecf4',
+                borderRadius: '12px',
+                boxShadow: '0 8px 24px rgba(0, 0, 0, 0.1)',
+                marginTop: '4px',
+                maxHeight: '200px',
+                overflowY: 'auto'
+              }}>
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
+                  gap: '2px',
+                  padding: '8px'
+                }}>
+                  {AVAILABLE_ICONS.map((item) => (
+                    <button
+                      key={item.icon}
+                      type="button"
+                      onClick={() => handleIconSelect(item.icon)}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        padding: '8px 12px',
+                        border: 'none',
+                        borderRadius: '8px',
+                        backgroundColor: formData.icon === item.icon ? `${currentColor}15` : 'transparent',
+                        cursor: 'pointer',
+                        fontSize: '14px',
+                        fontFamily: 'system-ui, -apple-system, sans-serif',
+                        transition: 'all 0.2s ease',
+                        textAlign: 'left'
+                      }}
+                      onMouseEnter={(e) => {
+                        if (formData.icon !== item.icon) {
+                          e.currentTarget.style.backgroundColor = '#f7fafc';
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (formData.icon !== item.icon) {
+                          e.currentTarget.style.backgroundColor = 'transparent';
+                        }
+                      }}
+                    >
+                      <span style={{ fontSize: '16px' }}>{item.icon}</span>
+                      <span style={{ 
+                        color: formData.icon === item.icon ? currentColor : '#4a5568',
+                        fontSize: '13px',
+                        fontWeight: formData.icon === item.icon ? '600' : '400'
+                      }}>
+                        {item.label}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
         <div style={{ marginBottom: '24px' }}>
@@ -340,12 +500,22 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ category, onSubmit, onCance
           <div style={{ 
             display: 'flex', 
             alignItems: 'center', 
-            gap: '8px',
+            gap: '12px',
             padding: '12px',
             backgroundColor: '#f7fafc',
             borderRadius: '8px',
             border: '1px solid #e8ecf4'
           }}>
+            <div style={{
+              width: '24px',
+              height: '24px',
+              backgroundColor: currentColor,
+              borderRadius: '6px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '14px'
+            }}>{formData.icon}</div>
             <span style={{
               padding: '4px 12px',
               backgroundColor: `${currentColor}15`,
@@ -367,6 +537,20 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ category, onSubmit, onCance
             </span>
           </div>
         </div>
+      )}
+
+      {showIconPicker && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 999
+          }}
+          onClick={() => setShowIconPicker(false)}
+        />
       )}
     </div>
   );

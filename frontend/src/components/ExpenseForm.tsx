@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { getCategoryIcon, getCategoryColor } from '../utils/categoryIcons';
 import type { Expense, Category } from '../types';
 
 interface ExpenseFormProps {
@@ -95,6 +96,10 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ expense, categories, onSubmit
     }
   };
 
+  const selectedCategory = categories.find(cat => cat.id.toString() === formData.categoryId);
+  const selectedCategoryIcon = selectedCategory ? getCategoryIcon(selectedCategory.name) : '💰';
+  const selectedCategoryColor = selectedCategory ? getCategoryColor(selectedCategory.name) : '#00c853';
+
   if (categories.length === 0) {
     return (
       <div style={{
@@ -178,14 +183,14 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ expense, categories, onSubmit
         <div style={{
           width: '32px',
           height: '32px',
-          backgroundColor: expense ? '#1565c0' : '#00c853',
+          backgroundColor: selectedCategoryColor,
           borderRadius: '8px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           fontSize: '16px'
         }}>
-          {expense ? '✏️' : '💰'}
+          {selectedCategoryIcon}
         </div>
         <div>
           <h2 style={{
@@ -282,11 +287,14 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ expense, categories, onSubmit
               }}
             >
               <option value="">Select a category</option>
-              {categories.map(category => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
+              {categories.map(category => {
+                const categoryIcon = getCategoryIcon(category.name);
+                return (
+                  <option key={category.id} value={category.id}>
+                    {categoryIcon} {category.name}
+                  </option>
+                );
+              })}
             </select>
             {errors.categoryId && (
               <span style={{ 
@@ -347,6 +355,56 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ expense, categories, onSubmit
             placeholder="Optional description"
           />
         </div>
+
+        {selectedCategory && (
+          <div style={{
+            padding: '12px',
+            backgroundColor: '#f7fafc',
+            borderRadius: '8px',
+            border: '1px solid #e8ecf4'
+          }}>
+            <div style={{
+              fontSize: '12px',
+              color: '#4a5568',
+              marginBottom: '8px',
+              fontWeight: '600',
+              textTransform: 'uppercase',
+              letterSpacing: '0.5px'
+            }}>
+              Selected Category
+            </div>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
+            }}>
+              <div style={{
+                width: '20px',
+                height: '20px',
+                backgroundColor: selectedCategoryColor,
+                borderRadius: '4px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '12px'
+              }}>
+                {selectedCategoryIcon}
+              </div>
+              <span style={{
+                padding: '2px 8px',
+                backgroundColor: selectedCategoryColor + '15',
+                color: selectedCategoryColor,
+                borderRadius: '12px',
+                fontSize: '11px',
+                fontWeight: '600',
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px'
+              }}>
+                {selectedCategory.name}
+              </span>
+            </div>
+          </div>
+        )}
 
         <div style={{ 
           display: 'flex', 
