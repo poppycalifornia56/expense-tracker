@@ -9,7 +9,7 @@
     "dev": "nodemon src/server.ts",
     "postinstall": "prisma generate"
   },
-   "engines": {
+  "engines": {
     "node": ">=18.0.0"
   },
   "keywords": [],
