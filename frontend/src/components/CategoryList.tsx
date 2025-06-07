@@ -52,7 +52,9 @@ const CategoryList: React.FC<CategoryListProps> = ({ categories, onEdit, onDelet
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
       {categories.map((category) => {
-        const categoryIcon = getCategoryIcon(category.name);
+        // const categoryIcon = getCategoryIcon(category.name);
+        // const categoryColor = getCategoryColor(category.name);
+        const categoryIcon = category.icon || getCategoryIcon(category.name);
         const categoryColor = getCategoryColor(category.name);
         
         return (

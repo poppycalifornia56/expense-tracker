@@ -9,6 +9,7 @@ interface CategoryFormProps {
 }
 
 const AVAILABLE_ICONS = [
+  { icon: '🏷️', label: 'General' }, 
   { icon: '🍔', label: 'Food & Dining' },
   { icon: '🚗', label: 'Transport' },
   { icon: '🎮', label: 'Entertainment' },
@@ -24,7 +25,6 @@ const AVAILABLE_ICONS = [
   { icon: '💻', label: 'Technology' },
   { icon: '☕', label: 'Coffee & Drinks' },
   { icon: '🏦', label: 'Banking & Finance' },
-  { icon: '🏷️', label: 'General' },
   { icon: '🎵', label: 'Music' },
   { icon: '🏋️', label: 'Fitness' },
   { icon: '🎨', label: 'Art & Creativity' },
