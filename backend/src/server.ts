@@ -9,7 +9,17 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-app.use(cors());
+const corsOptions = {
+  origin: [
+    'http://localhost:3000',  
+    'http://localhost:5173',  
+    'https://monumental-alfajores-d4703a.netlify.app'  
+  ],
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use('/api/categories', categoryRoutes);
@@ -17,6 +27,10 @@ app.use('/api/expenses', expenseRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Expense Tracker API is running' });
+});
+
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -30,8 +44,4 @@ app.use('*', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
-});
-
-app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'OK', timestamp: new Date().toISOString() });
 });
