@@ -8,7 +8,7 @@ import type {
   UpdateExpenseRequest
 } from '../types';
 
-const API_BASE_URL = 'http://localhost:3001/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://expense-tracker-backend-bvpi.onrender.com/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
