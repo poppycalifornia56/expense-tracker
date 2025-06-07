@@ -26,7 +26,7 @@ A full-stack Expense Tracker application with a RESTful API backend and a single
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/expense-tracker.git
+git clone https://github.com/poppycalifornia56/expense-tracker.git
 cd expense-tracker
 cd backend
 npm install
