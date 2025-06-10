@@ -4,7 +4,7 @@ A full-stack Expense Tracker application with a RESTful API backend and a single
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 ### Backend
 - **Node.js**
