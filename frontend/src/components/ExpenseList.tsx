@@ -77,7 +77,7 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
         alignItems: 'center',
         justifyContent: 'center',
         zIndex: 1000,
-        padding: '20px'
+        padding: '16px'
       }}
       onClick={onClose}
     >
@@ -85,7 +85,7 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
         style={{
           backgroundColor: 'white',
           borderRadius: '16px',
-          padding: '32px',
+          padding: '24px',
           maxWidth: '500px',
           width: '100%',
           maxHeight: '90vh',
@@ -99,8 +99,8 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
           onClick={onClose}
           style={{
             position: 'absolute',
-            top: '16px',
-            right: '16px',
+            top: '12px',
+            right: '12px',
             background: 'none',
             border: 'none',
             fontSize: '24px',
@@ -120,22 +120,22 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
           ×
         </button>
 
-        <div style={{ marginBottom: '24px' }}>
+        <div style={{ marginBottom: '20px' }}>
           <div style={{ 
             display: 'flex', 
             alignItems: 'center', 
-            gap: '16px', 
+            gap: '12px', 
             marginBottom: '12px' 
           }}>
             <div style={{
-              width: '48px',
-              height: '48px',
+              width: '40px',
+              height: '40px',
               backgroundColor: categoryColor,
-              borderRadius: '12px',
+              borderRadius: '10px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '20px'
+              fontSize: '18px'
             }}>
               {categoryIcon}
             </div>
@@ -143,18 +143,18 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
               <h2 style={{ 
                 margin: '0 0 4px 0', 
                 color: '#1a202c',
-                fontSize: '24px',
+                fontSize: '20px',
                 fontWeight: '700',
                 lineHeight: '1.2'
               }}>
                 {expense.title}
               </h2>
               <span style={{
-                padding: '4px 12px',
+                padding: '4px 10px',
                 backgroundColor: categoryColor + '15',
                 color: categoryColor,
-                borderRadius: '16px',
-                fontSize: '12px',
+                borderRadius: '12px',
+                fontSize: '11px',
                 fontWeight: '600',
                 textTransform: 'uppercase',
                 letterSpacing: '0.5px'
@@ -168,13 +168,13 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
         <div style={{
           backgroundColor: '#fee2e2',
           border: '2px solid #fecaca',
-          borderRadius: '12px',
-          padding: '20px',
+          borderRadius: '10px',
+          padding: '16px',
           textAlign: 'center',
-          marginBottom: '24px'
+          marginBottom: '20px'
         }}>
           <div style={{
-            fontSize: '36px',
+            fontSize: '28px',
             fontWeight: '800',
             color: '#dc2626',
             lineHeight: '1'
@@ -183,25 +183,25 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
           </div>
         </div>
 
-        <div style={{ marginBottom: '32px' }}>
-          <div style={{ marginBottom: '20px' }}>
+        <div style={{ marginBottom: '24px' }}>
+          <div style={{ marginBottom: '16px' }}>
             <label style={{
               display: 'block',
-              fontSize: '12px',
+              fontSize: '11px',
               fontWeight: '600',
               color: '#4a5568',
               textTransform: 'uppercase',
               letterSpacing: '0.5px',
-              marginBottom: '8px'
+              marginBottom: '6px'
             }}>
               Date
             </label>
             <div style={{
-              padding: '12px 16px',
+              padding: '10px 14px',
               backgroundColor: '#f7fafc',
               borderRadius: '8px',
               border: '1px solid #e8ecf4',
-              fontSize: '16px',
+              fontSize: '14px',
               color: '#1a202c',
               fontWeight: '500'
             }}>
@@ -213,21 +213,21 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
             <div>
               <label style={{
                 display: 'block',
-                fontSize: '12px',
+                fontSize: '11px',
                 fontWeight: '600',
                 color: '#4a5568',
                 textTransform: 'uppercase',
                 letterSpacing: '0.5px',
-                marginBottom: '8px'
+                marginBottom: '6px'
               }}>
                 Description
               </label>
               <div style={{
-                padding: '12px 16px',
+                padding: '10px 14px',
                 backgroundColor: '#f7fafc',
                 borderRadius: '8px',
                 border: '1px solid #e8ecf4',
-                fontSize: '16px',
+                fontSize: '14px',
                 color: '#1a202c',
                 lineHeight: '1.5'
               }}>
@@ -239,25 +239,27 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
 
         <div style={{
           display: 'flex',
-          gap: '12px',
-          justifyContent: 'flex-end'
+          gap: '10px',
+          justifyContent: 'flex-end',
+          flexWrap: 'wrap'
         }}>
           <button
             onClick={handleEdit}
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '8px',
-              padding: '12px 24px',
+              gap: '6px',
+              padding: '10px 20px',
               background: 'linear-gradient(135deg, #1565c0 0%, #1976d2 100%)',
               color: 'white',
               border: 'none',
-              borderRadius: '10px',
+              borderRadius: '8px',
               cursor: 'pointer',
-              fontSize: '14px',
+              fontSize: '13px',
               fontWeight: '600',
               transition: 'all 0.2s ease',
-              boxShadow: '0 4px 12px rgba(21, 101, 192, 0.25)'
+              boxShadow: '0 4px 12px rgba(21, 101, 192, 0.25)',
+              minWidth: '120px'
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-2px)';
@@ -275,17 +277,18 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '8px',
-              padding: '12px 24px',
+              gap: '6px',
+              padding: '10px 20px',
               background: 'linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%)',
               color: 'white',
               border: 'none',
-              borderRadius: '10px',
+              borderRadius: '8px',
               cursor: 'pointer',
-              fontSize: '14px',
+              fontSize: '13px',
               fontWeight: '600',
               transition: 'all 0.2s ease',
-              boxShadow: '0 4px 12px rgba(255, 107, 107, 0.25)'
+              boxShadow: '0 4px 12px rgba(255, 107, 107, 0.25)',
+              minWidth: '120px'
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-2px)';
@@ -419,8 +422,8 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ expenses, onEdit, onDelete })
       <div style={{
         backgroundColor: 'white',
         borderRadius: '12px',
-        padding: '24px',
-        marginBottom: '20px',
+        padding: '20px',
+        marginBottom: '16px',
         boxShadow: '0 2px 4px rgba(0, 0, 0, 0.04)',
         border: '1px solid #e8ecf4'
       }}>
@@ -466,7 +469,8 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ expenses, onEdit, onDelete })
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-          gap: '16px'
+          gap: '12px',
+          marginBottom: filters.dateRange === 'custom' ? '0' : '16px'
         }}>
           <div>
             <label style={{
@@ -572,8 +576,8 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ expenses, onEdit, onDelete })
           <div style={{
             display: 'grid',
             gridTemplateColumns: '1fr 1fr',
-            gap: '16px',
-            marginTop: '16px'
+            gap: '12px',
+            marginBottom: '16px'
           }}>
             <div>
               <label style={{
@@ -627,7 +631,6 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ expenses, onEdit, onDelete })
         )}
 
         <div style={{
-          marginTop: '16px',
           padding: '8px 12px',
           backgroundColor: '#f7fafc',
           borderRadius: '6px',
@@ -646,11 +649,10 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ expenses, onEdit, onDelete })
       {filteredAndSortedExpenses.length === 0 ? (
         <div style={{ 
           textAlign: 'center', 
-          padding: '48px 24px',
+          padding: '40px 20px',
           backgroundColor: '#f7fafc',
           borderRadius: '12px',
-          border: '2px dashed #e8ecf4',
-          position: 'relative'
+          border: '2px dashed #e8ecf4'
         }}>
           <div style={{
             width: '48px',
@@ -714,7 +716,7 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ expenses, onEdit, onDelete })
                 style={{
                   backgroundColor: 'white',
                   borderRadius: '12px',
-                  padding: '20px',
+                  padding: '16px',
                   boxShadow: '0 2px 4px rgba(0, 0, 0, 0.04)',
                   border: '1px solid #e8ecf4',
                   transition: 'all 0.2s ease',
@@ -730,9 +732,9 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ expenses, onEdit, onDelete })
                   e.currentTarget.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.04)';
                 }}
               >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '16px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px' }}>
                   <div style={{ flex: 1, minWidth: '0' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px', flexWrap: 'wrap' }}>
                       <div style={{
                         width: '24px',
                         height: '24px',
@@ -741,14 +743,17 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ expenses, onEdit, onDelete })
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        fontSize: '12px'
+                        fontSize: '12px',
+                        flexShrink: 0
                       }}>{categoryIcon}</div>
                       <h3 style={{ 
                         margin: '0', 
                         color: '#1a202c',
-                        fontSize: '16px',
+                        fontSize: '15px',
                         fontWeight: '700',
-                        lineHeight: '1.2'
+                        lineHeight: '1.2',
+                        flex: 1,
+                        minWidth: '120px'
                       }}>
                         {expense.title}
                       </h3>
@@ -760,7 +765,8 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ expenses, onEdit, onDelete })
                         fontSize: '11px',
                         fontWeight: '600',
                         textTransform: 'uppercase',
-                        letterSpacing: '0.5px'
+                        letterSpacing: '0.5px',
+                        flexShrink: 0
                       }}>
                         {expense.category.name}
                       </span>
@@ -783,7 +789,8 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ expenses, onEdit, onDelete })
                       gap: '8px',
                       fontSize: '12px', 
                       color: '#4a5568',
-                      fontWeight: '500'
+                      fontWeight: '500',
+                      flexWrap: 'wrap'
                     }}>
                       <span style={{ 
                         padding: '2px 8px',
@@ -792,7 +799,8 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ expenses, onEdit, onDelete })
                         border: '1px solid #e8ecf4',
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '4px'
+                        gap: '4px',
+                        flexShrink: 0
                       }}>
                         📅 {formatDate(expense.date)}
                       </span>
@@ -802,7 +810,8 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ expenses, onEdit, onDelete })
                         color: '#dc2626',
                         borderRadius: '12px',
                         border: '1px solid #fecaca',
-                        fontWeight: '600'
+                        fontWeight: '600',
+                        flexShrink: 0
                       }}>
                         {formatAmount(expense.amount)}
                       </span>
@@ -813,9 +822,11 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ expenses, onEdit, onDelete })
                     fontSize: '12px',
                     color: '#4a5568',
                     fontWeight: '500',
-                    opacity: 0.7
+                    opacity: 0.7,
+                    flexShrink: 0,
+                    alignSelf: 'center'
                   }}>
-                    Click to view details
+                    Click to view
                   </div>
                 </div>
               </div>
