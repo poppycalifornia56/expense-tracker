@@ -69,7 +69,6 @@ const CategoryList: React.FC<CategoryListProps> = ({ categories, onEdit, onDelet
     },
     leftContent: {
       flex: 1,
-      minWidth: '0',
       minWidth: '200px',
     },
     categoryHeader: {
