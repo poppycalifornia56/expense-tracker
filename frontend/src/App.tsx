@@ -168,18 +168,18 @@ const App: React.FC = () => {
     }).format(amount);
   };
 
-  const containerStyle = {
+  const containerStyle: React.CSSProperties = {
     minHeight: "100vh",
     backgroundColor: "#f7f9fc",
     padding: isMobile ? "16px" : "20px",
   };
 
-  const maxWidthContainerStyle = {
+  const maxWidthContainerStyle: React.CSSProperties = {
     maxWidth: "1200px",
     margin: "0 auto",
   };
 
-  const headerCardStyle = {
+  const headerCardStyle: React.CSSProperties = {
     backgroundColor: "white",
     borderRadius: "16px",
     padding: isMobile ? "20px" : "32px",
@@ -188,7 +188,7 @@ const App: React.FC = () => {
     border: "1px solid #e8ecf4",
   };
 
-  const statsGridStyle = {
+  const statsGridStyle: React.CSSProperties = {
     display: "grid",
     gridTemplateColumns: isMobile 
       ? "1fr" 
@@ -196,7 +196,7 @@ const App: React.FC = () => {
     gap: isMobile ? "16px" : "20px",
   };
 
-  const tabContainerStyle = {
+  const tabContainerStyle: React.CSSProperties = {
     backgroundColor: "white",
     borderRadius: "16px",
     padding: "8px",
@@ -205,17 +205,17 @@ const App: React.FC = () => {
     border: "1px solid #e8ecf4",
     display: "flex",
     gap: "8px",
-    flexDirection: isMobile ? "column" : "row" as "row",
+    flexDirection: (isMobile ? "column" : "row") as "column" | "row",
   };
 
-  const mainContentStyle = {
+  const mainContentStyle: React.CSSProperties = {
     display: "grid",
     gridTemplateColumns: isMobile ? "1fr" : "2fr 440px",
     gap: "24px",
     alignItems: "start",
   };
 
-  const listContainerStyle = {
+  const listContainerStyle: React.CSSProperties = {
     backgroundColor: "white",
     borderRadius: "16px",
     padding: isMobile ? "16px" : "24px",
@@ -223,8 +223,8 @@ const App: React.FC = () => {
     border: "1px solid #e8ecf4",
   };
 
-  const formContainerStyle = {
-    position: isMobile ? "static" : "sticky" as "sticky",
+  const formContainerStyle: React.CSSProperties = {
+    position: (isMobile ? "static" : "sticky") as "static" | "sticky",
     top: isMobile ? "auto" : "20px",
     backgroundColor: "white",
     borderRadius: "16px",

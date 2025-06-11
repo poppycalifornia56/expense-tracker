@@ -35,130 +35,6 @@ const AVAILABLE_ICONS = [
   { icon: "🎭", label: "Events & Activities" },
 ];
 
-const styles = {
-  container: (isMobile: boolean) => ({
-    backgroundColor: "white",
-    borderRadius: isMobile ? "12px" : "16px",
-    padding: isMobile ? "16px" : "24px",
-    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.04)",
-    border: "1px solid #e8ecf4",
-    position: "relative" as const,
-    width: "100%",
-    maxWidth: isMobile ? "none" : "500px",
-    margin: isMobile ? "0" : "0 auto",
-  }),
-  header: (isMobile: boolean) => ({
-    display: "flex",
-    alignItems: "center",
-    gap: isMobile ? "8px" : "12px",
-    marginBottom: isMobile ? "16px" : "20px",
-    paddingBottom: isMobile ? "12px" : "16px",
-    borderBottom: "2px solid #f7fafc",
-    flexWrap: isMobile ? ("wrap" as const) : ("nowrap" as const),
-  }),
-  iconBox: (isMobile: boolean) => ({
-    width: isMobile ? "28px" : "32px",
-    height: isMobile ? "28px" : "32px",
-    borderRadius: "8px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontSize: isMobile ? "14px" : "16px",
-  }),
-  title: (isMobile: boolean) => ({
-    margin: "0",
-    fontSize: isMobile ? "18px" : "20px",
-    fontWeight: "700",
-    color: "#1a202c",
-    flex: isMobile ? "1 1 100%" : "none",
-  }),
-  badge: (isMobile: boolean) => ({
-    padding: isMobile ? "3px 8px" : "4px 12px",
-    borderRadius: "20px",
-    fontSize: isMobile ? "11px" : "12px",
-    fontWeight: "600",
-    textTransform: "uppercase" as const,
-    letterSpacing: "0.5px",
-    marginTop: isMobile ? "4px" : "0",
-  }),
-  input: (isMobile: boolean, hasError: boolean, currentColor: string) => ({
-    width: "100%",
-    padding: isMobile ? "10px 14px" : "12px 16px",
-    border: hasError ? "2px solid #ff6b6b" : "2px solid #e8ecf4",
-    borderRadius: isMobile ? "10px" : "12px",
-    borderColor: currentColor,
-    fontSize: isMobile ? "14px" : "15px",
-    fontFamily: "system-ui, -apple-system, sans-serif",
-    transition: "all 0.2s ease",
-    backgroundColor: "#ffffff",
-    outline: "none",
-    color: "#1a202c",
-    WebkitAppearance: "none",
-    boxSizing: "border-box" as const,
-  }),
-  textarea: (isMobile: boolean) => ({
-    width: "100%",
-    padding: isMobile ? "10px 14px" : "12px 16px",
-    border: "2px solid #e8ecf4",
-    borderRadius: isMobile ? "10px" : "12px",
-    fontSize: isMobile ? "14px" : "15px",
-    fontFamily: "system-ui, -apple-system, sans-serif",
-    transition: "all 0.2s ease",
-    backgroundColor: "#ffffff",
-    resize: "vertical" as const,
-    minHeight: isMobile ? "70px" : "80px",
-    outline: "none",
-    color: "#1a202c",
-    boxSizing: "border-box" as const,
-  }),
-  iconPicker: (isMobile: boolean) => ({
-    position: "absolute" as const,
-    top: "100%",
-    left: "0",
-    right: "0",
-    zIndex: 1000,
-    backgroundColor: "white",
-    border: "2px solid #e8ecf4",
-    borderRadius: isMobile ? "10px" : "12px",
-    boxShadow: "0 8px 24px rgba(0, 0, 0, 0.1)",
-    marginTop: "4px",
-    maxHeight: isMobile ? "160px" : "200px",
-    overflowY: "auto" as const,
-  }),
-  iconGrid: (isMobile: boolean) => ({
-    display: "grid",
-    gridTemplateColumns: isMobile
-      ? "1fr"
-      : "repeat(auto-fill, minmax(180px, 1fr))",
-    gap: "2px",
-    padding: isMobile ? "6px" : "8px",
-  }),
-  buttonGroup: (isMobile: boolean) => ({
-    display: "flex",
-    gap: isMobile ? "8px" : "12px",
-    justifyContent: "flex-end",
-    alignItems: "center",
-    paddingTop: isMobile ? "12px" : "16px",
-    borderTop: "1px solid #f7fafc",
-    flexDirection: isMobile ? ("column" as const) : ("row" as const),
-  }),
-  button: (isMobile: boolean, isPrimary: boolean = false) => ({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: "8px",
-    padding: isMobile ? "10px 16px" : "12px 20px",
-    border: isPrimary ? "none" : "1px solid #e8ecf4",
-    borderRadius: isMobile ? "10px" : "12px",
-    cursor: "pointer",
-    fontSize: isMobile ? "13px" : "14px",
-    fontWeight: "600",
-    transition: "all 0.2s ease",
-    width: isMobile ? "100%" : "auto",
-    minWidth: isMobile ? "none" : "120px",
-  }),
-};
-
 const CategoryForm: React.FC<CategoryFormProps> = ({
   category,
   onSubmit,
@@ -226,7 +102,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
       icon: formData.icon,
     };
 
-    onSubmit(submitData);
+    onSubmit(submitData as Category);
   };
 
   const handleChange = (
@@ -256,42 +132,183 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
 
   const currentColor = getCategoryColor(formData.name);
 
+  const containerStyle: React.CSSProperties = {
+    backgroundColor: "white",
+    borderRadius: isMobile ? "12px" : "16px",
+    padding: isMobile ? "16px" : "24px",
+    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.04)",
+    border: "1px solid #e8ecf4",
+    position: "relative",
+    width: "100%",
+    maxWidth: isMobile ? "none" : "500px",
+    margin: isMobile ? "0" : "0 auto",
+  };
+
+  const headerStyle: React.CSSProperties = {
+    display: "flex",
+    alignItems: "center",
+    gap: isMobile ? "8px" : "12px",
+    marginBottom: isMobile ? "16px" : "20px",
+    paddingBottom: isMobile ? "12px" : "16px",
+    borderBottom: "2px solid #f7fafc",
+    flexWrap: isMobile ? "wrap" : "nowrap",
+  };
+
+  const iconBoxStyle: React.CSSProperties = {
+    width: isMobile ? "28px" : "32px",
+    height: isMobile ? "28px" : "32px",
+    borderRadius: "8px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: isMobile ? "14px" : "16px",
+    backgroundColor: currentColor,
+  };
+
+  const titleStyle: React.CSSProperties = {
+    margin: "0",
+    fontSize: isMobile ? "18px" : "20px",
+    fontWeight: "700",
+    color: "#1a202c",
+    flex: isMobile ? "1 1 100%" : "none",
+  };
+
+  const badgeStyle: React.CSSProperties = {
+    padding: isMobile ? "3px 8px" : "4px 12px",
+    borderRadius: "20px",
+    fontSize: isMobile ? "11px" : "12px",
+    fontWeight: "600",
+    textTransform: "uppercase",
+    letterSpacing: "0.5px",
+    marginTop: isMobile ? "4px" : "0",
+    backgroundColor: category ? "#e3f2fd" : "#e8f5e8",
+    color: category ? "#1565c0" : "#00c853",
+  };
+
+  const inputStyle: React.CSSProperties = {
+    width: "100%",
+    padding: isMobile ? "10px 14px" : "12px 16px",
+    border: errors.name ? "2px solid #ff6b6b" : "2px solid #e8ecf4",
+    borderRadius: isMobile ? "10px" : "12px",
+    fontSize: isMobile ? "14px" : "15px",
+    fontFamily: "system-ui, -apple-system, sans-serif",
+    transition: "all 0.2s ease",
+    backgroundColor: "#ffffff",
+    outline: "none",
+    color: "#1a202c",
+    boxSizing: "border-box",
+  };
+
+  const textareaStyle: React.CSSProperties = {
+    width: "100%",
+    padding: isMobile ? "10px 14px" : "12px 16px",
+    border: "2px solid #e8ecf4",
+    borderRadius: isMobile ? "10px" : "12px",
+    fontSize: isMobile ? "14px" : "15px",
+    fontFamily: "system-ui, -apple-system, sans-serif",
+    transition: "all 0.2s ease",
+    backgroundColor: "#ffffff",
+    resize: "vertical",
+    minHeight: isMobile ? "70px" : "80px",
+    outline: "none",
+    color: "#1a202c",
+    boxSizing: "border-box",
+  };
+
+  const iconPickerStyle: React.CSSProperties = {
+    position: "absolute",
+    top: "100%",
+    left: "0",
+    right: "0",
+    zIndex: 1000,
+    backgroundColor: "white",
+    border: "2px solid #e8ecf4",
+    borderRadius: isMobile ? "10px" : "12px",
+    boxShadow: "0 8px 24px rgba(0, 0, 0, 0.1)",
+    marginTop: "4px",
+    maxHeight: isMobile ? "160px" : "200px",
+    overflowY: "auto",
+  };
+
+  const iconGridStyle: React.CSSProperties = {
+    display: "grid",
+    gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fill, minmax(180px, 1fr))",
+    gap: "2px",
+    padding: isMobile ? "6px" : "8px",
+  };
+
+  const buttonGroupStyle: React.CSSProperties = {
+    display: "flex",
+    gap: isMobile ? "8px" : "12px",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    paddingTop: isMobile ? "12px" : "16px",
+    borderTop: "1px solid #f7fafc",
+    flexDirection: isMobile ? "column" : "row",
+  };
+
+  const getButtonStyle = (isPrimary: boolean = false): React.CSSProperties => ({
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "8px",
+    padding: isMobile ? "10px 16px" : "12px 20px",
+    border: isPrimary ? "none" : "1px solid #e8ecf4",
+    borderRadius: isMobile ? "10px" : "12px",
+    cursor: "pointer",
+    fontSize: isMobile ? "13px" : "14px",
+    fontWeight: "600",
+    transition: "all 0.2s ease",
+    width: isMobile ? "100%" : "auto",
+    minWidth: isMobile ? "none" : "120px",
+    backgroundColor: isPrimary ? currentColor : "#f7fafc",
+    color: isPrimary ? "white" : "#4a5568",
+    boxShadow: isPrimary ? `0 2px 4px ${currentColor}40` : "none",
+  });
+
+  const labelStyle: React.CSSProperties = {
+    display: "block",
+    marginBottom: "8px",
+    color: "#4a5568",
+    fontSize: isMobile ? "13px" : "14px",
+    fontWeight: "600",
+  };
+
+  const iconButtonStyle: React.CSSProperties = {
+    display: "flex",
+    alignItems: "center",
+    gap: isMobile ? "8px" : "12px",
+    width: "100%",
+    padding: isMobile ? "10px 14px" : "12px 16px",
+    border: "2px solid #e8ecf4",
+    borderRadius: isMobile ? "10px" : "12px",
+    backgroundColor: "#ffffff",
+    cursor: "pointer",
+    fontSize: isMobile ? "14px" : "15px",
+    fontFamily: "system-ui, -apple-system, sans-serif",
+    transition: "all 0.2s ease",
+    outline: "none",
+    textAlign: "left",
+    boxSizing: "border-box",
+  };
+
   return (
-    <div style={styles.container(isMobile)}>
-      <div style={styles.header(isMobile)}>
-        <div
-          style={{
-            ...styles.iconBox(isMobile),
-            backgroundColor: currentColor,
-          }}
-        >
+    <div style={containerStyle}>
+      <div style={headerStyle}>
+        <div style={iconBoxStyle}>
           {formData.icon}
         </div>
-        <h2 style={styles.title(isMobile)}>
+        <h2 style={titleStyle}>
           {category ? "Edit Category" : "Add Category"}
         </h2>
-        <span
-          style={{
-            ...styles.badge(isMobile),
-            backgroundColor: category ? "#e3f2fd" : "#e8f5e8",
-            color: category ? "#1565c0" : "#00c853",
-          }}
-        >
+        <span style={badgeStyle}>
           {category ? "Edit" : "New"}
         </span>
       </div>
 
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: isMobile ? "16px" : "20px" }}>
-          <label
-            style={{
-              display: "block",
-              marginBottom: "8px",
-              color: "#4a5568",
-              fontSize: isMobile ? "13px" : "14px",
-              fontWeight: "600",
-            }}
-          >
+          <label style={labelStyle}>
             Category Name *
           </label>
           <input
@@ -299,10 +316,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
             name="name"
             value={formData.name}
             onChange={handleChange}
-            style={{
-              ...styles.input(isMobile, !!errors.name, currentColor),
-              WebkitAppearance: "none",
-            }}
+            style={inputStyle}
             placeholder="Enter category name"
             onFocus={(e) => {
               if (!errors.name) {
@@ -361,38 +375,14 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
         </div>
 
         <div style={{ marginBottom: isMobile ? "16px" : "20px" }}>
-          <label
-            style={{
-              display: "block",
-              marginBottom: "8px",
-              color: "#4a5568",
-              fontSize: isMobile ? "13px" : "14px",
-              fontWeight: "600",
-            }}
-          >
+          <label style={labelStyle}>
             Category Icon *
           </label>
           <div style={{ position: "relative" }}>
             <button
               type="button"
               onClick={() => setShowIconPicker(!showIconPicker)}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: isMobile ? "8px" : "12px",
-                width: "100%",
-                padding: isMobile ? "10px 14px" : "12px 16px",
-                border: "2px solid #e8ecf4",
-                borderRadius: isMobile ? "10px" : "12px",
-                backgroundColor: "#ffffff",
-                cursor: "pointer",
-                fontSize: isMobile ? "14px" : "15px",
-                fontFamily: "system-ui, -apple-system, sans-serif",
-                transition: "all 0.2s ease",
-                outline: "none",
-                textAlign: "left",
-                boxSizing: "border-box",
-              }}
+              style={iconButtonStyle}
               onFocus={(e) => {
                 e.target.style.borderColor = currentColor;
                 e.target.style.boxShadow = `0 0 0 3px ${currentColor}20`;
@@ -447,8 +437,8 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
             </button>
 
             {showIconPicker && (
-              <div style={styles.iconPicker(isMobile)}>
-                <div style={styles.iconGrid(isMobile)}>
+              <div style={iconPickerStyle}>
+                <div style={iconGridStyle}>
                   {AVAILABLE_ICONS.map((item) => (
                     <button
                       key={item.icon}
@@ -516,15 +506,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
         </div>
 
         <div style={{ marginBottom: isMobile ? "20px" : "24px" }}>
-          <label
-            style={{
-              display: "block",
-              marginBottom: "8px",
-              color: "#4a5568",
-              fontSize: isMobile ? "13px" : "14px",
-              fontWeight: "600",
-            }}
-          >
+          <label style={labelStyle}>
             Description{" "}
             <span style={{ color: "#a0aec0", fontWeight: "400" }}>
               (Optional)
@@ -535,7 +517,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
             value={formData.description}
             onChange={handleChange}
             rows={3}
-            style={styles.textarea(isMobile)}
+            style={textareaStyle}
             placeholder="Add a description to help identify this category..."
             onFocus={(e) => {
               e.target.style.borderColor = currentColor;
@@ -548,15 +530,13 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
           />
         </div>
 
-        <div style={styles.buttonGroup(isMobile)}>
+        <div style={buttonGroupStyle}>
           {category && (
             <button
               type="button"
               onClick={onCancel}
               style={{
-                ...styles.button(isMobile, false),
-                backgroundColor: "#f7fafc",
-                color: "#4a5568",
+                ...getButtonStyle(false),
                 order: isMobile ? 2 : 1,
               }}
               onMouseEnter={(e) => {
@@ -575,10 +555,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
           <button
             type="submit"
             style={{
-              ...styles.button(isMobile, true),
-              backgroundColor: currentColor,
-              color: "white",
-              boxShadow: `0 2px 4px ${currentColor}40`,
+              ...getButtonStyle(true),
               order: isMobile ? 1 : 2,
             }}
             onMouseEnter={(e) => {
