@@ -5,6 +5,7 @@ import ExpenseList from "./components/ExpenseList";
 import ExpenseForm from "./components/ExpenseForm";
 import CategoryList from "./components/CategoryList";
 import CategoryForm from "./components/CategoryForm";
+import Footer from "./components/Footer";
 
 const App: React.FC = () => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
@@ -22,11 +23,11 @@ const App: React.FC = () => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768);
     };
-    
+
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   useEffect(() => {
@@ -190,8 +191,8 @@ const App: React.FC = () => {
 
   const statsGridStyle: React.CSSProperties = {
     display: "grid",
-    gridTemplateColumns: isMobile 
-      ? "1fr" 
+    gridTemplateColumns: isMobile
+      ? "1fr"
       : "repeat(auto-fit, minmax(200px, 1fr))",
     gap: isMobile ? "16px" : "20px",
   };
@@ -347,11 +348,11 @@ const App: React.FC = () => {
               >
                 Total Expenses
               </div>
-              <div 
+              <div
                 className="amount"
-                style={{ 
-                  fontSize: isMobile ? "20px" : "24px", 
-                  fontWeight: "700" 
+                style={{
+                  fontSize: isMobile ? "20px" : "24px",
+                  fontWeight: "700",
                 }}
               >
                 {formatAmount(totalExpenses)}
@@ -379,11 +380,11 @@ const App: React.FC = () => {
               >
                 Transactions
               </div>
-              <div 
+              <div
                 className="amount"
-                style={{ 
-                  fontSize: isMobile ? "20px" : "24px", 
-                  fontWeight: "700" 
+                style={{
+                  fontSize: isMobile ? "20px" : "24px",
+                  fontWeight: "700",
                 }}
               >
                 {expenses.length}
@@ -411,11 +412,11 @@ const App: React.FC = () => {
               >
                 Categories
               </div>
-              <div 
+              <div
                 className="amount"
-                style={{ 
-                  fontSize: isMobile ? "20px" : "24px", 
-                  fontWeight: "700" 
+                style={{
+                  fontSize: isMobile ? "20px" : "24px",
+                  fontWeight: "700",
                 }}
               >
                 {categories.length}
@@ -456,12 +457,12 @@ const App: React.FC = () => {
               !
             </div>
             <span
-              style={{ 
-                color: "#c53030", 
-                fontWeight: "500", 
+              style={{
+                color: "#c53030",
+                fontWeight: "500",
                 fontSize: "14px",
                 flex: 1,
-                minWidth: "200px"
+                minWidth: "200px",
               }}
             >
               {error}
@@ -680,6 +681,7 @@ const App: React.FC = () => {
           </div>
         )}
       </div>
+      <Footer isMobile={isMobile} />
     </div>
   );
 };
