@@ -17,7 +17,6 @@ A full-stack Expense Tracker application with a RESTful API backend and a single
 - **React**
 - **TypeScript**
 - **Vite**
-- **CSS Modules / Tailwind (if applicable)**
 
 ---
 
